@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cymatic Sphere Visualization</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+        .control-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .control-group {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+        }
+        .control-group:last-child {
+            border-bottom: none;
+        }
+        .info-panel {
+            position: absolute;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        #savedPoints { top: 20px; }
+        #currentCalcs { top: 440px; }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background: #444;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #666;
+        }
+        .color-control, .slider-control {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            gap: 10px;
+        }
+        .color-control label, .slider-control label {
+            min-width: 120px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        h3 {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+        }
+        .feature-test-panel {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        .test-status {
+            margin-left: 10px;
+        }
+    </style>
+    
+    <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.152.2/examples/jsm/controls/OrbitControls.js" type="module"></script>
+</head>
+<body>
+    <div class="control-panel">
+        <div class="control-group">
+            <h3>Playback</h3>
+            <div class="button-group">
+                <button id="playButton">Play Music</button>
+                <button id="pauseButton">Pause</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <h3>Colors</h3>
+            <div class="color-control">
+                <label>Base Color:</label>
+                <input type="color" id="baseColor" value="#444444">
+            </div>
+            <div class="color-control">
+                <label>Peak Color:</label>
+                <input type="color" id="peakColor" value="#FF0000">
+            </div>
+            <div class="color-control">
+                <label>Trough Color:</label>
+                <input type="color" id="troughColor" value="#0000FF">
+            </div>
+        </div>
+
+        <div class="control-group">
+            <h3>Wave Controls</h3>
+            <div class="slider-control">
+                <label>Sensitivity:</label>
+                <input type="range" id="sensitivity" min="0.1" max="2" step="0.1" value="0.8">
+                <div class="slider-value">0.8</div>
+            </div>
+        </div>
+
+        <!-- Additional control groups will be added by ControlPanel.js -->
+    </div>
+
+    <div id="savedPoints" class="info-panel">
+        <h3>Saved Extreme Points</h3>
+        <div id="savedPointsList"></div>
+    </div>
+    <div id="currentCalcs" class="info-panel">
+        <h3>Current Calculations</h3>
+        <div id="currentCalcsList"></div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
